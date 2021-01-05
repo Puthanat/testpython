@@ -18480,7 +18480,7 @@ div.tagsinput {
     right: -20px;
     left: -20px;
     bottom: -20px;
-    background: url("assets/css/images/samples/lockscreen-bg.jpg") no-repeat center center;
+    background: url("../assets/css/images/samples/lockscreen-bg.jpg") no-repeat center center;
     background-size: cover;
     overflow: hidden;
     min-height: 100%; }
