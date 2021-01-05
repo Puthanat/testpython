@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">Profile</li>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+        <div class="col-md-6 col-lg-4 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Basic Map</h6>
+                    <div class="map-container">
+                    <div id="map-with-marker" class="google-map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

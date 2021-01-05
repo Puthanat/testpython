@@ -5,6 +5,10 @@
     <title>{% block title %}Django Boards{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'assets/css/demo_2/style.css.map' %}">
     <link rel="stylesheet" href="{% static 'assets/css/demo_2/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
+    <link rel="stylesheet" href=".{% static 'assets/css/demo_2/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}">
     {% block stylesheet %}{% endblock %}
   </head>
   <body>
@@ -16,8 +20,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="mainMenu">
-              {% if user.is_authenticated %}
+            <div class="collapse navbar-collapse" id="mainMenu">             
                 {% comment %} <ul class="navbar-nav ml-auto">
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,32 +34,33 @@
                     </div>
                   </li>
                 </ul> {% endcomment %}
-          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
-              <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              {{ user.username }}
-              </a>
-              <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="mdi mdi-cached mr-2 text-success"></i> My account </a>
-                <a class="dropdown-item" href="#">
-                  <i class="mdi mdi-cached mr-2 text-success"></i> Change password </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'logout' %}">
-                  <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
-              </div>
-            </li>
-            
-          
-            
-            
-          </ul>
+            {% if user.is_authenticated %}
+                  {% comment %} <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                      <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                      {{ user.username }}
+                      </a>
+                      <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item" href="#">
+                          <i class="mdi mdi-cached mr-2 text-success"></i> My account </a>
+                        <a class="dropdown-item" href="#">
+                          <i class="mdi mdi-cached mr-2 text-success"></i> Change password </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">
+                          <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
+                      </div>
+                    </li>
+                  </ul> {% endcomment %}
+                  <a href="{% url 'Profile' %}" class="btn btn-outline-success">คน + กลุ่ม</a>
+                  {% comment %} <a href="{% url 'signup' %}" class="btn btn-outline-secondary">กอง</a>
+                  <a href="{% url 'login' %}" class="btn btn-outline-warning">ใบเหลือง</a>
+                  <a href="{% url 'signup' %}" class="btn btn-outline-info">ภาพร่วม</a> {% endcomment %}
               {% else %}
                 <form class="form-inline ml-auto">
                   <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
                   <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
                 </form>
-              {% endif %}
+            {% endif %}
             </div>
           </div>
         </nav>
