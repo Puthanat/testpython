@@ -140,3 +140,5 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')     #for production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  #for production
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
