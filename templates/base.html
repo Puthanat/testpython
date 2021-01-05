@@ -34,10 +34,13 @@
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              {{ user.username }}
               </a>
-              <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+              <div class="dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                 <a class="dropdown-item" href="#">
-                  <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
+                  <i class="mdi mdi-cached mr-2 text-success"></i> My account </a>
+                <a class="dropdown-item" href="#">
+                  <i class="mdi mdi-cached mr-2 text-success"></i> Change password </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'logout' %}">
                   <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
