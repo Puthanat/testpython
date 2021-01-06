@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="{% static 'assets/css/demo_2/style.css' %}">
   <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
   <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
-  <link rel="stylesheet" href=".{% static 'assets/css/demo_2/style.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/vendors/jquery-bar-rating/fontawesome-stars-o.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/vendors/jquery-bar-rating/fontawesome-stars.css' %}">
+
   <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}">
   {% block stylesheet %}{% endblock %}
 </head>
@@ -19,7 +21,8 @@
   <div class="container-scroller">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <div class="container">
-        <a href="{% url 'home' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">คน + กลุ่ม</a>
+        <a href="{% url 'home' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">คน +
+          กลุ่ม</a>
         <a href="{% url 'Profile' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">กอง</a>
         <a href="{% url 'login' %}" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">ใบเหลือง</a>
         <a href="{% url 'signup' %}" class="btn btn-dark btn-lg active" role="button" aria-pressed="true">ภาพร่วม</a>
@@ -35,8 +38,7 @@
   {% block footer %}
   <footer class="bg-light text-center text-lg-start">
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-      © 2020 Copyright:
-      <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+      © 2020 Copyright
     </div>
   </footer>
   {% endblock footer %}
@@ -50,6 +52,7 @@
   <script src="{% static 'js/popper.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'assets/js/google-maps.js' %}"></script>
+  <script src="{% static 'assets/vendors/jquery-bar-rating/jquery.barrating.min.js' %}"></script>
 </body>
 
 </html>
