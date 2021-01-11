@@ -27,6 +27,10 @@ def about(request):
     # do something...
     return render(request, 'about.html')
 
+def topics(request):
+    # do something...
+    return render(request, 'topics.html')
+
 def Profile(request):
     boards = Board.objects.all()
     return render(request, 'Profile.html',{'boards': boards})
