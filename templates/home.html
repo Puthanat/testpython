@@ -4,10 +4,11 @@
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      <form class="forms-sample">
+      <form method="POST" class="forms-sample">
+      {% csrf_token %}
         <div class="form-group">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="ชื่อคน" aria-label="Recipient's username"
+            <input type="text" id="firstname" name="firstname" class="form-control" placeholder="ชื่อคน" aria-label="Recipient's username"
               aria-describedby="basic-addon2">
             <button data-repeater-create type="button" class="btn btn-gradient-info btn-sm icon-btn ml-2 mb-2">
               <i class="mdi mdi-plus"></i>
@@ -20,13 +21,16 @@
         </div>
         <div class="form-group">
           <label for="exampleTextarea1">comment</label>
-          <textarea class="form-control" id="exampleTextarea2" rows="4"></textarea>
+          <textarea id="comment" name="comment" class="form-control" id="exampleTextarea2" rows="4"></textarea>
         </div>
         
-        <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
-        <button class="btn btn-dark">Cancel</button>
+        <input type="submit" value="submit" class="btn btn-gradient-primary mr-2">
       </form>
-    </div>
+      {% if mgs.massage == 'Sussecs'%}
+      <script>
+      alert("Sussecs!");
+      </script>
+      {%endif%}
   </div>
 </div>
 {% endblock %}

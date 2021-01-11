@@ -5,16 +5,31 @@ from .forms import NewTopicForm
 from .models import Board, Topic, Post
 
 def home(request):
+    mgs = {
+                    'massage' : ' '
+                }
+    if request.method == 'POST':
+        firstname = request.POST.get('firstname')
+        comment = request.POST.get('comment')
+        add = Board(
+            name = firstname,
+            description = comment
+        )
+        add.save()
+        mgs = {
+                    'massage' : 'Sussecs'
+                }
+        
     boards = Board.objects.all()
-    return render(request, 'home.html', {'boards': boards})
+    return render(request, 'home.html', {'boards': boards, 'mgs':mgs})
 
 def about(request):
     # do something...
     return render(request, 'about.html')
 
 def Profile(request):
-    # do something...
-    return render(request, 'Profile.html')
+    boards = Board.objects.all()
+    return render(request, 'Profile.html',{'boards': boards})
 
 def about_company(request):
     # do something else...
