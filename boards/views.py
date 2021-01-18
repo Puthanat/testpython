@@ -27,10 +27,6 @@ def about(request):
     # do something...
     return render(request, 'about.html')
 
-def topics(request):
-    # do something...
-    return render(request, 'topics.html')
-
 def Profile(request):
     boards = Board.objects.all()
     return render(request, 'Profile.html',{'boards': boards})
@@ -66,3 +62,14 @@ def new_topic(request, pk):
     else:
         form = NewTopicForm()
     return render(request, 'new_topic.html', {'board': board, 'form': form})
+
+def topics(request,board_id):
+    boards = Board.objects.get(pk=board_id)
+    if request.method == 'POST':
+        firstname = request.POST.get('firstname')
+        comment = request.POST.get('comment')
+        boards.name = firstname
+        boards.description = comment
+        boards.save()
+        return redirect('Profile')
+    return render(request, 'topics.html',{'boards': boards})

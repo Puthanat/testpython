@@ -1,14 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}
-  {{ board.name }} - {{ block.super }}
-{% endblock %}
-
-{% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
-  <li class="breadcrumb-item active">{{ board.name }}</li>
-{% endblock %}
-
 {% block content %}
-
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <form method="POST" class="forms-sample">
+      {% csrf_token %}
+        <div class="form-group">
+          <label for="exampleTextarea1">ชื่อคน</label>
+          <div class="input-group">
+            <input type="text" id="firstname" name="firstname" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ boards.name }}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleTextarea1">comment</label>
+          <textarea id="comment" name="comment" class="form-control" id="exampleTextarea2" rows="4">{{ boards.description }}</textarea>
+        </div>
+        <input type="submit" value="submit" class="btn btn-gradient-primary mr-2">
+      </form>
+  </div>
+</div>
 {% endblock %}

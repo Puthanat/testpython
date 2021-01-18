@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 
 from accounts import views as accounts_views
 from boards import views
+from django.urls import path
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
@@ -32,5 +33,5 @@ urlpatterns = [
     url(r'^boards/(?P<pk>\d+)/new/$', views.new_topic, name='new_topic'),
     url(r'^admin/', admin.site.urls),
     url(r'^Profile/',views.Profile, name = 'Profile'),
-    url(r'^topics/',views.topics, name = 'topics'),
+    path('topics/<int:board_id>', views.topics, name='topics'),
 ]
