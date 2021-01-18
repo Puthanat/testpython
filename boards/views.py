@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404
+from django.http import Http404,HttpResponse
 from .forms import NewTopicForm
 from .models import Board, Topic, Post
+import xlwt
 
 def home(request):
     mgs = {
@@ -28,7 +29,7 @@ def about(request):
     return render(request, 'about.html')
 
 def Profile(request):
-    boards = Board.objects.all()
+    boards = Board.objects.all().order_by('id')
     return render(request, 'Profile.html',{'boards': boards})
 
 def about_company(request):
@@ -73,3 +74,33 @@ def topics(request,board_id):
         boards.save()
         return redirect('Profile')
     return render(request, 'topics.html',{'boards': boards})
+
+def export_users_xls(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="users.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Users')
+
+    # Sheet header, first row
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['รหัสพนักงาน', 'ชื่อ-นามสกุล', 'ความคิดเห็น',]
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+
+    boards = Board.objects.all().order_by('id').values_list('id', 'name','description')
+    for row in boards:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+    return response
