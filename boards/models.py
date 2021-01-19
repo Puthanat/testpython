@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Board(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=100)
+    num_stars = models.IntegerField(null=True,default=0)
 
     def __str__(self):
         return self.name

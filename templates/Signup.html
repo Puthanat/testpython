@@ -1,23 +1,25 @@
-{% extends 'base_accounts.html' %}
+{% extends 'base.html' %}
 
-{% block title %}Sign up to Django Boards{% endblock %}
+{% block title %}
+{{ board.name }} - {{ block.super }}
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+<li class="breadcrumb-item active">{{ board.name }}</li>
+{% endblock %}
 
 {% block content %}
-  <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10 col-sm-12">
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="col-lg-6 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <h3 class="card-title">Sign up</h3>
-          <form method="post" novalidate>
-            {% csrf_token %}
-            {% include 'includes/form.html' %}
-            <button type="submit" class="btn btn-primary btn-block">Create an account</button>
-          </form>
-        </div>
-        <div class="card-footer text-muted text-center">
-          Already have an account? <a href="{% url 'login' %}">Log in</a>
+          <h4 class="card-title">Bar chart</h4>
+          <canvas id="barChartDark" style="height:230px"></canvas>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

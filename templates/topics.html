@@ -5,19 +5,40 @@
   <div class="card">
     <div class="card-body">
       <form method="POST" class="forms-sample">
-      {% csrf_token %}
+        {% csrf_token %}
         <div class="form-group">
           <label for="exampleTextarea1">ชื่อคน</label>
           <div class="input-group">
-            <input type="text" id="firstname" name="firstname" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ boards.name }}">
+            <input type="text" id="firstname" name="firstname" class="form-control" aria-label="Recipient's username"
+              aria-describedby="basic-addon2" value="{{ boards.name }}">
           </div>
         </div>
         <div class="form-group">
           <label for="exampleTextarea1">comment</label>
-          <textarea id="comment" name="comment" class="form-control" id="exampleTextarea2" rows="4">{{ boards.description }}</textarea>
+          <textarea id="comment" name="comment" class="form-control" id="exampleTextarea2"
+            rows="4">{{ boards.description }}</textarea>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="exampleTextarea1">star</label>
+            <div class="col-sm-9">
+              <select class="form-control" id="star" name="star">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+              </select>
+            </div>
+          </div>
         </div>
         <input type="submit" value="submit" class="btn btn-gradient-primary mr-2">
       </form>
+    </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}

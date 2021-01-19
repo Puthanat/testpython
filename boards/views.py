@@ -69,8 +69,10 @@ def topics(request,board_id):
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
         comment = request.POST.get('comment')
+        star = request.POST.get('star')
         boards.name = firstname
         boards.description = comment
+        boards.num_stars = star
         boards.save()
         return redirect('Profile')
     return render(request, 'topics.html',{'boards': boards})

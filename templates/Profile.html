@@ -19,6 +19,7 @@
             <th> ID </th>
             <th> First name </th>
             <th> Comment </th>
+            <th> star </th>
             <th> Edit </th>
           </tr>
         </thead>
@@ -28,6 +29,7 @@
             <td>{{ board.id }}</td>
             <td>{{ board.name }}</td>
             <td>{{ board.description }}</td>
+            <td>{{ board.num_stars }}</td>
             <td><a href="{% url 'topics' board.id %}" class="btn btn-warning" role="button" aria-pressed="true">+</a></td>
           </tr>
           {% endfor %}
