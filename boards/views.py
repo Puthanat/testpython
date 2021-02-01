@@ -1,9 +1,14 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404,HttpResponse
+from django.http import Http404,HttpResponse,JsonResponse
 from .forms import NewTopicForm
 from .models import Board, Topic, Post
 import xlwt
+
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import tempfile
+from django.db.models import Sum
 
 def home(request):
     mgs = {
@@ -106,3 +111,38 @@ def export_users_xls(request):
 
     wb.save(response)
     return response
+
+def export_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="users.pdf"'
+
+    response['Content-Transfer-Encoding']='binary'
+
+    html_string=render_to_string('pdf-output.html',{'total':0})
+    html = HTML(string=html_string)
+
+    result = html.write_pdf()
+
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+
+
+        output=open(output.name,'rb')
+        response.write(output.read())
+    
+    return response
+
+def population_chart(request):
+    labels = []
+    data = []
+
+    queryset = Board.objects.order_by('-num_stars')
+    for Boards in queryset:
+        labels.append(Boards.name)
+        data.append(Boards.num_stars)
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })

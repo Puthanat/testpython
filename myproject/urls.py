@@ -34,4 +34,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^Profile/',views.Profile, name = 'Profile'),
     path('topics/<int:board_id>', views.topics, name='topics'),
+    path('export_pdf',views.export_pdf, name="export_pdf"),
+    path('population-chart/', views.population_chart, name='population-chart'),
 ]
