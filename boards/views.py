@@ -9,11 +9,13 @@ from django.template.loader import render_to_string
 from weasyprint import HTML
 import tempfile
 from django.db.models import Sum
+import datetime
+import requests, xmltodict
 
 def home(request):
     mgs = {
-                    'massage' : ' '
-                }
+                'massage' : ' '
+            }
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
         comment = request.POST.get('comment')
@@ -126,3 +128,79 @@ def population_chart(request):
         'labels': labels,
         'data': data,
     })
+
+def login(request):
+    aerror = {
+                'x' : ' '
+                }
+    if request.method == 'POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+        if username == '464628' or username == '501103':
+                check_ID = idm_login(username,password)
+                reposeMge = check_ID  
+                if reposeMge == 'true':
+                        nameget = idm(username)
+                        Fullname = nameget['TitleFullName']+nameget['FirstName']+' '+nameget['LastName']
+                        Position = nameget['Position']+nameget['LevelCode']+nameget['DepartmentShort']
+                        StaffDate = nameget['StaffDate'].split('/')
+                        Workage = int(StaffDate[2])-543
+                        today = datetime.datetime.today()
+                        yearBE = today.year
+                        Someyear = yearBE-Workage  
+                        print(Fullname,Position,Someyear)
+                        return redirect('home')
+        else:
+            aerror = {
+                    'x':'Invalid Credentials. Please try again.'
+                    }
+    return render(request,'login.html',{'aerror': aerror})        
+
+def idm_login(username, password):
+    # Emp_passc = str(Emp_pass)
+    print('--------------------')
+    
+    url="https://idm.pea.co.th/webservices/idmservices.asmx?WSDL"
+    headers = {'content-type': 'text/xml'}
+    xmltext ='''<?xml version="1.0" encoding="utf-8"?>
+                 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                    <soap:Body>
+                        <IsValidUsernameAndPassword_SI xmlns="http://idm.pea.co.th/">
+                        <WSAuthenKey>{0}</WSAuthenKey>
+                        <Username>{1}</Username>
+                        <Password>{2}</Password>
+                        </IsValidUsernameAndPassword_SI>
+                    </soap:Body>
+                </soap:Envelope>'''
+    wskey = '07d75910-3365-42c9-9365-9433b51177c6'
+    body = xmltext.format(wskey,username,password)
+    response = requests.post(url,data=body,headers=headers)
+    print(response.status_code)
+    o = xmltodict.parse(response.text)
+    jsonconvert=dict(o)
+    # print(o)
+    authen_response = jsonconvert["soap:Envelope"]["soap:Body"]["IsValidUsernameAndPassword_SIResponse"]["IsValidUsernameAndPassword_SIResult"]["ResultObject"]
+    return authen_response
+
+def idm(username):
+    url="https://idm.pea.co.th/webservices/EmployeeServices.asmx?WSDL"
+    headers = {'content-type': 'text/xml'}
+    xmltext ='''<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                <soap:Body>
+                    <GetEmployeeInfoByEmployeeId_SI xmlns="http://idm.pea.co.th/">
+                        <WSAuthenKey>{0}</WSAuthenKey>
+                        <EmployeeId>{1}</EmployeeId>
+                        </GetEmployeeInfoByEmployeeId_SI>
+                </soap:Body>
+                </soap:Envelope>'''
+    wsauth = 'e7040c1f-cace-430b-9bc0-f477c44016c3'
+    body = xmltext.format(wsauth,username)
+    response = requests.post(url,data=body,headers=headers)
+    o = xmltodict.parse(response.text)
+
+    # print(o)
+    jsonconvert=o["soap:Envelope"]['soap:Body']['GetEmployeeInfoByEmployeeId_SIResponse']['GetEmployeeInfoByEmployeeId_SIResult']['ResultObject']
+    employeedata = dict(jsonconvert)
+    # print(employeedata['FirstName'])
+    return employeedata

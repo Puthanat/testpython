@@ -9,7 +9,6 @@ from django.urls import path
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^signup/$', accounts_views.signup, name='signup'),
-    url(r'^login/$', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
 
     url(r'^reset/$',
@@ -32,6 +31,7 @@ urlpatterns = [
     url(r'^boards/(?P<pk>\d+)/$', views.board_topics, name='board_topics'),
     url(r'^admin/', admin.site.urls),
     url(r'^Profile/',views.Profile, name = 'Profile'),
+    path('login/',views.login, name='login'),
     path('topics/<int:board_id>', views.topics, name='topics'),
     path('export_pdf',views.export_pdf, name="export_pdf"),
     path('population-chart/', views.population_chart, name='population-chart'),
