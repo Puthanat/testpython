@@ -136,7 +136,7 @@ def login(request):
     if request.method == 'POST':
         username=request.POST.get('username')
         password=request.POST.get('password')
-        if username == '464628' or username == '501103':
+        if username != ' ':
                 check_ID = idm_login(username,password)
                 reposeMge = check_ID  
                 if reposeMge == 'true':
@@ -152,7 +152,7 @@ def login(request):
                         return redirect('home')
         else:
             aerror = {
-                    'x':'Invalid Credentials. Please try again.'
+                    'x':'Invalid Credentials. Please try again.' 
                     }
     return render(request,'login.html',{'aerror': aerror})        
 
